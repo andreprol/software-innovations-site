@@ -1,5 +1,5 @@
 // tests/lib/contact/sendNotification.test.ts
-import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 
 const sendMock = vi.fn()
 vi.mock('resend', () => ({
@@ -17,6 +17,8 @@ import { sendContactNotification } from '@/lib/contact/sendNotification'
 const payload = { name: 'Fulano', email: 'fulano@example.com', message: 'Olá', consent: true as const }
 
 describe('sendContactNotification', () => {
+  const originalContactToEmail = process.env.CONTACT_TO_EMAIL
+
   // async + block body: a sync `beforeEach(() => sendMock.mockReset())` here triggers a
   // Vitest 5.1.1 false positive where the 3rd test's caught rejection (mockRejectedValue)
   // is still reported as an uncaught error, even though sendContactNotification's
@@ -25,6 +27,18 @@ describe('sendContactNotification', () => {
   // hook async avoids the false positive; behavior (reset before every test) is unchanged.
   beforeEach(async () => {
     sendMock.mockReset()
+    // sendContactNotification agora guarda explicitamente contra CONTACT_TO_EMAIL
+    // ausente/vazio (sem chamar o Resend) — os testes que exercitam o caminho de
+    // sucesso/erro do Resend precisam configurar a env var pra passar dessa guarda.
+    process.env.CONTACT_TO_EMAIL = 'destino@example.com'
+  })
+
+  afterEach(() => {
+    if (originalContactToEmail === undefined) {
+      delete process.env.CONTACT_TO_EMAIL
+    } else {
+      process.env.CONTACT_TO_EMAIL = originalContactToEmail
+    }
   })
 
   it('returns ok:true when Resend succeeds', async () => {
@@ -43,5 +57,19 @@ describe('sendContactNotification', () => {
     sendMock.mockRejectedValue(new Error('network down'))
     const result = await sendContactNotification(payload)
     expect(result.ok).toBe(false)
+  })
+
+  it('returns ok:false without calling Resend when CONTACT_TO_EMAIL is missing/empty', async () => {
+    delete process.env.CONTACT_TO_EMAIL
+    const result = await sendContactNotification(payload)
+    expect(result.ok).toBe(false)
+    expect(sendMock).not.toHaveBeenCalled()
+  })
+
+  it('returns ok:false without calling Resend when CONTACT_TO_EMAIL is blank', async () => {
+    process.env.CONTACT_TO_EMAIL = '   '
+    const result = await sendContactNotification(payload)
+    expect(result.ok).toBe(false)
+    expect(sendMock).not.toHaveBeenCalled()
   })
 })
