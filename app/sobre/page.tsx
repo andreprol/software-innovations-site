@@ -10,8 +10,8 @@ export default function Sobre() {
           </h1>
           <p className="mx-auto max-w-2xl text-zinc-600 dark:text-zinc-400">
             Há {company.yearsInMarket} anos no mercado, sediados em{" "}
-            {company.city}/{company.state}, desenvolvendo soluções de T.I. para
-            empresas privadas e órgãos públicos.
+            {company.city}/{company.state}, com soluções de T.I. para empresas
+            privadas e preparadas para atender órgãos públicos.
           </p>
         </div>
 
@@ -54,9 +54,9 @@ export default function Sobre() {
             Atuação no setor privado e público
           </h2>
           <p className="max-w-3xl text-zinc-600 dark:text-zinc-400">
-            Atendemos empresas privadas de todos os portes e também órgãos
-            públicos, como secretarias, autarquias e instituições públicas,
-            levando soluções de T.I. para a gestão pública.
+            Atendemos empresas privadas e estamos preparados para atender
+            também órgãos públicos, como secretarias, autarquias e instituições
+            públicas, levando soluções de T.I. para a gestão pública.
           </p>
         </div>
       </section>
