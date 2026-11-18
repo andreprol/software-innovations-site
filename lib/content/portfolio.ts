@@ -67,7 +67,7 @@ export const portfolioItems: PortfolioItem[] = [
     name: 'CV Tailor',
     description: 'Gera currículo ATS-safe sob medida para cada vaga, usando IA.',
     url: 'https://github.com/andreprol/cv-tailor',
-    categorySlug: 'ecommerce-sites',
+    categorySlug: 'desenvolvimento-sob-medida',
   },
   {
     name: 'RJ Tecnologia',
