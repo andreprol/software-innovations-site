@@ -10,6 +10,14 @@ import { sendContactNotification } from '@/lib/contact/sendNotification'
 // Como ele só exporta POST (nunca GET) e lê corpo da requisição via
 // `request.json()`, não há nada aqui que o Next possa pré-renderizar/cachear;
 // confirmado no output de `next build` (ver task-5-report.md).
+
+// Mensagem genérica para o cliente em caso de falha no envio — o erro real
+// (ex.: "CONTACT_TO_EMAIL não configurado", ou a mensagem bruta do SDK do
+// Resend) nunca deve chegar a um visitante não autenticado do site: pode
+// expor detalhes de configuração interna/terceiro. O erro real é só logado
+// no servidor (console.error) antes de responder.
+const GENERIC_SEND_ERROR_MESSAGE = 'Não foi possível enviar sua mensagem. Tente novamente mais tarde.'
+
 export async function POST(request: Request): Promise<Response> {
   const body = await request.json()
   const result = validateContactPayload(body)
@@ -21,7 +29,8 @@ export async function POST(request: Request): Promise<Response> {
   const sendResult = await sendContactNotification(result.data)
 
   if (!sendResult.ok) {
-    return Response.json({ error: sendResult.error }, { status: 502 })
+    console.error('[api/contato] falha ao enviar notificação de contato:', sendResult.error)
+    return Response.json({ error: GENERIC_SEND_ERROR_MESSAGE }, { status: 502 })
   }
 
   return Response.json({ ok: true }, { status: 200 })
