@@ -64,7 +64,7 @@ export default function HeroScene() {
   }
 
   return (
-    <div className={SCENE_CLASSNAME}>
+    <div className={SCENE_CLASSNAME} aria-hidden="true">
       <Canvas camera={{ position: [0, 0, 5], fov: 45 }} dpr={[1, 2]}>
         <ambientLight intensity={0.6} />
         <pointLight position={[5, 5, 5]} intensity={1.2} color="#d946ef" />
