@@ -1,4 +1,13 @@
+import type { Metadata } from "next";
 import { company } from "@/lib/content/company";
+
+export const metadata: Metadata = {
+  title: "Sobre a Empresa",
+  description: `Há ${company.yearsInMarket} anos no mercado, sediada em ${company.city}/${company.state}. Conheça a missão, o objetivo e os valores da ${company.tradeName}.`,
+  alternates: {
+    canonical: "/sobre",
+  },
+};
 
 export default function Sobre() {
   return (

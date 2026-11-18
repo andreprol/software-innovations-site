@@ -1,5 +1,15 @@
+import type { Metadata } from "next";
 import { serviceCategories } from "@/lib/content/services";
 import ServiceCategoryGrid from "@/components/sections/ServiceCategoryGrid";
+
+export const metadata: Metadata = {
+  title: "Soluções de T.I. sob Medida",
+  description:
+    "Desenvolvimento sob medida, fiscal e documentos eletrônicos, ERP e integrações, infraestrutura, marketing digital e e-commerce — soluções completas de T.I. para o seu negócio.",
+  alternates: {
+    canonical: "/solucoes",
+  },
+};
 
 export default function Solucoes() {
   return (

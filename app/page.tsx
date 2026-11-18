@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { company } from "@/lib/content/company";
 import { serviceCategories } from "@/lib/content/services";
@@ -5,6 +6,14 @@ import { portfolioItems } from "@/lib/content/portfolio";
 import ServiceCategoryGrid from "@/components/sections/ServiceCategoryGrid";
 import PortfolioGrid from "@/components/sections/PortfolioGrid";
 import HeroScene from "@/components/three/HeroSceneLoader";
+
+export const metadata: Metadata = {
+  title: `${company.tradeName} — Desenvolvimento de Software sob Medida no Rio de Janeiro`,
+  description: `${company.mission} Software sob medida, fiscal, ERP, infraestrutura e e-commerce — há ${company.yearsInMarket} anos em ${company.city}/${company.state}.`,
+  alternates: {
+    canonical: "/",
+  },
+};
 
 function buildWhatsAppLink(whatsapp: string): string {
   const digits = whatsapp.replace(/\D/g, "");

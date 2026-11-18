@@ -1,5 +1,14 @@
+import type { Metadata } from "next";
 import { company } from "@/lib/content/company";
 import ContactForm from "@/components/forms/ContactForm";
+
+export const metadata: Metadata = {
+  title: "Contato",
+  description: `Fale com a ${company.tradeName} pelo formulário, WhatsApp ou e-mail e conte qual é o desafio do seu negócio.`,
+  alternates: {
+    canonical: "/contato",
+  },
+};
 
 function buildWhatsAppLink(whatsapp: string): string {
   const digits = whatsapp.replace(/\D/g, "");

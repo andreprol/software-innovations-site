@@ -1,4 +1,13 @@
+import type { Metadata } from "next";
 import { company } from "@/lib/content/company";
+
+export const metadata: Metadata = {
+  title: "Política de Privacidade",
+  description: `Como a ${company.tradeName} coleta, usa e protege os dados pessoais enviados pelo formulário de contato do site.`,
+  alternates: {
+    canonical: "/privacidade",
+  },
+};
 
 export default function Privacidade() {
   return (

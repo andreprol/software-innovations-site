@@ -1,6 +1,16 @@
+import type { Metadata } from "next";
+import { company } from "@/lib/content/company";
 import { serviceCategories } from "@/lib/content/services";
 import { portfolioItems } from "@/lib/content/portfolio";
 import PortfolioGrid from "@/components/sections/PortfolioGrid";
+
+export const metadata: Metadata = {
+  title: "Portfólio de Projetos",
+  description: `Conheça projetos reais de sistemas, integrações e produtos que a ${company.tradeName} já entregou para empresas de diversos segmentos.`,
+  alternates: {
+    canonical: "/portfolio",
+  },
+};
 
 export default function Portfolio() {
   return (
