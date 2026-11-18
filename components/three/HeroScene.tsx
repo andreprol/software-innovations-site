@@ -17,6 +17,18 @@ function detectWebGL(): boolean {
   }
 }
 
+function detectPrefersReducedMotion(): boolean {
+  try {
+    return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  } catch {
+    // Restricted browser without matchMedia support: fall back to `false`,
+    // same failure-mode convention as detectWebGL() above — the caller still
+    // decides fallback-vs-canvas from the (possibly WebGL-less) other signal
+    // instead of crashing render.
+    return false;
+  }
+}
+
 // The WebGL/reduced-motion capability of this browser never changes during a
 // page session, so there is nothing to subscribe to — the "store" is read
 // once on the client. Modeled as useSyncExternalStore (rather than
@@ -28,12 +40,23 @@ function subscribe() {
   return () => {};
 }
 
+// useSyncExternalStore calls getSnapshot on every render of every subscribed
+// component, not just once (there's no real external store to diff against
+// here). detectWebGL() is expensive — it creates and immediately discards a
+// real WebGL context — and browsers cap simultaneous live contexts (~8-16,
+// evicting the oldest on overflow), so re-running it on every unrelated
+// re-render of HeroScene could in principle evict the actual rendering
+// context <Canvas> mounted, causing a black hero. Cache the result at module
+// scope so the real probe runs at most once per page load.
+let cachedSnapshot: boolean | undefined;
+
 function getSnapshot(): boolean {
-  const hasWebGL = detectWebGL();
-  const prefersReducedMotion = window.matchMedia(
-    "(prefers-reduced-motion: reduce)",
-  ).matches;
-  return shouldUseFallback({ hasWebGL, prefersReducedMotion });
+  if (cachedSnapshot === undefined) {
+    const hasWebGL = detectWebGL();
+    const prefersReducedMotion = detectPrefersReducedMotion();
+    cachedSnapshot = shouldUseFallback({ hasWebGL, prefersReducedMotion });
+  }
+  return cachedSnapshot;
 }
 
 function getServerSnapshot(): undefined {
