@@ -37,16 +37,39 @@ export default function Privacidade() {
             </h2>
             <p className="text-zinc-600 dark:text-zinc-400">
               Usamos esses dados exclusivamente para responder à sua solicitação
-              de contato.
+              de contato, incluindo a entrega da mensagem à nossa equipe.
             </p>
           </div>
 
           <div className="flex flex-col gap-3">
             <h2 className="text-xl font-semibold text-zinc-900 dark:text-zinc-50">
-              Compartilhamento
+              Compartilhamento e operadores
             </h2>
             <p className="text-zinc-600 dark:text-zinc-400">
-              Não compartilhamos seus dados pessoais com terceiros.
+              Os dados do formulário são processados pelo provedor de e-mail
+              Resend, exclusivamente para entregar sua mensagem até nós. Não
+              compartilhamos seus dados com terceiros para qualquer outra
+              finalidade, como marketing ou venda.
+            </p>
+          </div>
+
+          <div className="flex flex-col gap-3">
+            <h2 className="text-xl font-semibold text-zinc-900 dark:text-zinc-50">
+              Armazenamento
+            </h2>
+            <p className="text-zinc-600 dark:text-zinc-400">
+              Mantemos os dados do seu contato apenas pelo tempo necessário para
+              responder sua mensagem.
+            </p>
+          </div>
+
+          <div className="flex flex-col gap-3">
+            <h2 className="text-xl font-semibold text-zinc-900 dark:text-zinc-50">
+              Controlador dos dados
+            </h2>
+            <p className="text-zinc-600 dark:text-zinc-400">
+              O controlador dos seus dados pessoais é a {company.legalName},
+              inscrita no CNPJ {company.cnpj}.
             </p>
           </div>
 
