@@ -75,7 +75,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     name: 'RJ Tecnologia',
     description: 'Site institucional moderno para empresa de tecnologia.',
-    url: 'https://www.rjlogisticaetecnologia.com.br/',
+    url: 'https://rjlogisticaetecnologia.com.br/',
     categorySlug: 'ecommerce-sites',
   },
   {
