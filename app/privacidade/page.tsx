@@ -55,10 +55,21 @@ export default function Privacidade() {
               Compartilhamento e operadores
             </h2>
             <p className="text-zinc-600 dark:text-zinc-400">
-              Os dados do formulário são processados pelo provedor de e-mail
-              Resend, exclusivamente para entregar sua mensagem até nós. Não
-              compartilhamos seus dados com terceiros para qualquer outra
-              finalidade, como marketing ou venda.
+              Os dados do formulário passam por dois operadores: a Resend,
+              que envia o e-mail com sua mensagem, e o Google/Gmail, onde essa
+              mensagem é recebida e fica armazenada em nossa caixa de
+              entrada. Não compartilhamos seus dados com terceiros para
+              qualquer outra finalidade, como marketing ou venda.
+            </p>
+            <p className="text-zinc-600 dark:text-zinc-400">
+              A Resend é uma empresa americana, então seus dados podem ser
+              processados fora do Brasil por conta desses provedores
+              (transferência internacional de dados).
+            </p>
+            <p className="text-zinc-600 dark:text-zinc-400">
+              Tratamos seus dados com base no seu consentimento, dado ao
+              marcar o checkbox de concordância no formulário (art. 7º, I, da
+              LGPD).
             </p>
           </div>
 
@@ -67,8 +78,9 @@ export default function Privacidade() {
               Armazenamento
             </h2>
             <p className="text-zinc-600 dark:text-zinc-400">
-              Mantemos os dados do seu contato apenas pelo tempo necessário para
-              responder sua mensagem.
+              Mantemos os dados do seu contato pelo tempo necessário para
+              responder sua mensagem. Hoje não temos um prazo fixo de exclusão
+              automática desses dados.
             </p>
           </div>
 
