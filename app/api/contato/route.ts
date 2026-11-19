@@ -18,8 +18,19 @@ import { sendContactNotification } from '@/lib/contact/sendNotification'
 // no servidor (console.error) antes de responder.
 const GENERIC_SEND_ERROR_MESSAGE = 'Não foi possível enviar sua mensagem. Tente novamente mais tarde.'
 
+// JSON malformado no corpo (ex.: cliente bugado, request manual incompleta) não deve
+// virar 500 não tratado — `request.json()` lança nesse caso, então respondemos 400 com
+// erro claro, no mesmo formato de erro de validação, em vez de deixar a exceção subir.
+const INVALID_JSON_ERROR_MESSAGE = 'Corpo da requisição inválido (JSON malformado)'
+
 export async function POST(request: Request): Promise<Response> {
-  const body = await request.json()
+  let body: unknown
+  try {
+    body = await request.json()
+  } catch {
+    return Response.json({ error: INVALID_JSON_ERROR_MESSAGE }, { status: 400 })
+  }
+
   const result = validateContactPayload(body)
 
   if (!result.ok) {

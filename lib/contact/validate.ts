@@ -6,6 +6,11 @@ export type ValidationResult =
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
+const NAME_MAX_LENGTH = 120
+const EMAIL_MAX_LENGTH = 254
+const PHONE_MAX_LENGTH = 30
+const MESSAGE_MAX_LENGTH = 5000
+
 export function validateContactPayload(input: unknown): ValidationResult {
   if (typeof input !== 'object' || input === null) {
     return {
@@ -23,13 +28,25 @@ export function validateContactPayload(input: unknown): ValidationResult {
   const errors: Partial<Record<keyof ContactPayload, string>> = {}
 
   const name = typeof raw.name === 'string' ? raw.name.trim() : ''
-  if (!name) errors.name = 'Nome é obrigatório'
+  if (!name) {
+    errors.name = 'Nome é obrigatório'
+  } else if (name.length > NAME_MAX_LENGTH) {
+    errors.name = `Nome deve ter no máximo ${NAME_MAX_LENGTH} caracteres`
+  }
 
   const email = typeof raw.email === 'string' ? raw.email.trim() : ''
-  if (!email || !EMAIL_RE.test(email)) errors.email = 'E-mail inválido'
+  if (!email || !EMAIL_RE.test(email)) {
+    errors.email = 'E-mail inválido'
+  } else if (email.length > EMAIL_MAX_LENGTH) {
+    errors.email = `E-mail deve ter no máximo ${EMAIL_MAX_LENGTH} caracteres`
+  }
 
   const message = typeof raw.message === 'string' ? raw.message.trim() : ''
-  if (!message) errors.message = 'Mensagem é obrigatória'
+  if (!message) {
+    errors.message = 'Mensagem é obrigatória'
+  } else if (message.length > MESSAGE_MAX_LENGTH) {
+    errors.message = `Mensagem deve ter no máximo ${MESSAGE_MAX_LENGTH} caracteres`
+  }
 
   let phone: string | undefined
   if (raw.phone !== undefined && raw.phone !== null) {
@@ -37,6 +54,9 @@ export function validateContactPayload(input: unknown): ValidationResult {
       errors.phone = 'Telefone inválido'
     } else {
       phone = raw.phone.trim()
+      if (phone.length > PHONE_MAX_LENGTH) {
+        errors.phone = `Telefone deve ter no máximo ${PHONE_MAX_LENGTH} caracteres`
+      }
     }
   }
 

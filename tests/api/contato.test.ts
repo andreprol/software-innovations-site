@@ -36,4 +36,16 @@ describe('POST /api/contato', () => {
     expect(data.error).not.toBe(internalError)
     expect(data.error).not.toContain(internalError)
   })
+
+  it('returns 400 (not a 500) for malformed JSON in the request body', async () => {
+    const req = new Request('http://localhost/api/contato', {
+      method: 'POST',
+      body: '{ isto nao e json valido',
+    })
+    const res = await POST(req)
+    const data = await res.json()
+
+    expect(res.status).toBe(400)
+    expect(typeof data.error).toBe('string')
+  })
 })
