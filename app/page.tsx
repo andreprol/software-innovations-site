@@ -97,6 +97,21 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="mx-auto w-full max-w-6xl px-6 py-4">
+        <div className="flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-4">
+          <span className="rounded-full border border-zinc-300 px-4 py-2 text-sm font-medium text-zinc-700 dark:border-zinc-700 dark:text-zinc-300">
+            Dados tratados em conformidade com a LGPD
+          </span>
+          <span className="rounded-full border border-zinc-300 px-4 py-2 text-sm font-medium text-zinc-700 dark:border-zinc-700 dark:text-zinc-300">
+            Atendemos empresas privadas e estamos preparados para atender
+            órgãos públicos
+          </span>
+          <span className="rounded-full border border-zinc-300 px-4 py-2 text-sm font-medium text-zinc-700 dark:border-zinc-700 dark:text-zinc-300">
+            {company.yearsInMarket} anos de mercado
+          </span>
+        </div>
+      </section>
+
       <section className="mx-auto w-full max-w-6xl px-6 py-16">
         <div className="flex flex-col items-center gap-6 rounded-3xl border border-zinc-200 bg-gradient-to-br from-purple-600/10 via-fuchsia-500/10 to-cyan-400/10 px-6 py-12 text-center dark:border-zinc-800">
           <h2 className="text-2xl font-bold text-zinc-900 sm:text-3xl dark:text-zinc-50">
