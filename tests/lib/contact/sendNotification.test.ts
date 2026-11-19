@@ -47,6 +47,21 @@ describe('sendContactNotification', () => {
     expect(result.ok).toBe(true)
   })
 
+  it('passes replyTo as the lead\'s own email, so replying in the inbox reaches them', async () => {
+    sendMock.mockResolvedValue({ data: { id: 'abc' }, error: null })
+    await sendContactNotification(payload)
+    expect(sendMock).toHaveBeenCalledWith(
+      expect.objectContaining({ replyTo: payload.email })
+    )
+  })
+
+  it('falls back to "não informado" for a blank/whitespace-only phone', async () => {
+    sendMock.mockResolvedValue({ data: { id: 'abc' }, error: null })
+    await sendContactNotification({ ...payload, phone: '   ' })
+    const sentText = sendMock.mock.calls[0][0].text as string
+    expect(sentText).toContain('Telefone: não informado')
+  })
+
   it('returns ok:false when Resend returns an error, without throwing', async () => {
     sendMock.mockResolvedValue({ data: null, error: { message: 'domain not verified' } })
     const result = await sendContactNotification(payload)

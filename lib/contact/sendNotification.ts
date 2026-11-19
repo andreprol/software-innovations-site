@@ -18,10 +18,12 @@ export async function sendContactNotification(data: ContactPayload): Promise<Sen
 
     const resend = new Resend(process.env.RESEND_API_KEY)
 
+    const phone = data.phone?.trim()
+
     const text = [
       `Nome: ${data.name}`,
       `E-mail: ${data.email}`,
-      `Telefone: ${data.phone ?? 'não informado'}`,
+      `Telefone: ${phone || 'não informado'}`,
       '',
       'Mensagem:',
       data.message,
@@ -30,6 +32,7 @@ export async function sendContactNotification(data: ContactPayload): Promise<Sen
     const { error } = await resend.emails.send({
       from: FROM_EMAIL,
       to,
+      replyTo: data.email,
       subject: `Novo contato pelo site: ${data.name}`,
       text,
     })
